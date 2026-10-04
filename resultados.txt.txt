@@ -1,0 +1,128 @@
+# RESULTADOS - EJERCICIO 1
+
+## ENDPOINT ORIGINAL
+
+URL:
+
+https://fakestoreapi.com/auth/login
+
+Resultado:
+
+HTTP 522
+
+Validación:
+
+El HTTP 522 fue obtenido mediante JMeter y también mediante una solicitud
+directa utilizando curl.exe.
+
+Conclusión:
+
+El endpoint original no estuvo disponible desde el entorno de ejecución.
+
+## ENDPOINT ALTERNATIVO
+
+URL:
+
+https://dummyjson.com/auth/login
+
+Motivo:
+
+Se utilizó únicamente como alternativa debido a la indisponibilidad del
+endpoint original.
+
+## CONFIGURACIÓN DE CARGA
+
+Threads: 50
+
+Ramp-Up: 10 segundos
+
+Loop Count: Infinite
+
+Duration: 30 segundos
+
+Constant Throughput Timer:
+1200 samples/minute
+
+Calculate Throughput Based On:
+All active threads
+
+Throughput objetivo:
+20 TPS
+
+## SUMMARY REPORT
+
+Samples:
+799
+
+Average:
+662 ms
+
+Min:
+184 ms
+
+Max:
+21415 ms
+
+Std. Dev.:
+2767.36 ms
+
+Error %:
+34.168%
+
+Throughput:
+0.19302 TPS
+
+Received KB/sec:
+0.43
+
+Sent KB/sec:
+0.04
+
+Avg. Bytes:
+2287.1
+
+## CRITERIOS DE ACEPTACIÓN
+
+1. THROUGHPUT
+
+Objetivo:
+
+> = 20 TPS
+
+Resultado:
+0.19302 TPS
+
+Estado:
+NO CUMPLE
+
+2. TIEMPO MÁXIMO DE RESPUESTA
+
+Objetivo:
+<= 1500 ms
+
+Resultado:
+21415 ms
+(21.415 segundos)
+
+Estado:
+NO CUMPLE
+
+3. ERROR RATE
+
+Objetivo:
+< 3%
+
+Resultado:
+34.168%
+
+Estado:
+NO CUMPLE
+
+## NOTA
+
+Los resultados anteriores corresponden al endpoint alternativo DummyJSON.
+
+NO deben presentarse como resultados de rendimiento de FakeStoreAPI.
+
+Para obtener resultados definitivos del servicio solicitado originalmente,
+se debe repetir la prueba cuando FakeStoreAPI se encuentre disponible.

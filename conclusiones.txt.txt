@@ -1,0 +1,199 @@
+# CONCLUSIONES - EJERCICIO 1
+
+1. IMPLEMENTACIÓN
+
+---
+
+Se implementó una prueba de carga utilizando Apache JMeter 5.6.3 para validar
+un servicio HTTP de autenticación.
+
+La prueba incluye parametrización de usuarios mediante un archivo CSV,
+configuración de un HTTP Request mediante POST, envío de información en
+formato JSON y ejecución concurrente mediante un Thread Group.
+
+La configuración utilizada fue:
+
+* 50 usuarios virtuales.
+* Ramp-Up de 10 segundos.
+* Loop Count infinito.
+* Duración de 30 segundos.
+* Constant Throughput Timer de 1200 solicitudes por minuto.
+* Objetivo equivalente a 20 TPS.
+
+2. VALIDACIÓN DEL ENDPOINT ORIGINAL
+
+---
+
+El endpoint originalmente proporcionado para el ejercicio fue:
+
+https://fakestoreapi.com/auth/login
+
+Durante las pruebas realizadas, este endpoint respondió HTTP 522.
+
+Para descartar que el inconveniente estuviera relacionado exclusivamente
+con la configuración de Apache JMeter, se realizó una segunda validación
+directamente desde el entorno de ejecución utilizando curl.exe.
+
+La solicitud directa también obtuvo HTTP 522.
+
+Esto permitió determinar que la indisponibilidad del endpoint original no
+estaba relacionada exclusivamente con la configuración de JMeter.
+
+La evidencia de esta validación debe incluirse en el repositorio mediante
+una captura de pantalla si se dispone de ella.
+
+3. UTILIZACIÓN DE UN ENDPOINT ALTERNATIVO
+
+---
+
+Debido a la indisponibilidad del endpoint original, se utilizó DummyJSON
+como endpoint alternativo.
+
+El objetivo de esta sustitución fue validar técnicamente:
+
+* Parametrización mediante CSV.
+* Configuración del request HTTP.
+* Envío del body JSON.
+* Ejecución concurrente.
+* Configuración del throughput.
+* Obtención de métricas mediante JMeter.
+
+Esta sustitución se documenta explícitamente para mantener la trazabilidad
+de la prueba.
+
+Los resultados obtenidos contra DummyJSON NO representan resultados de
+rendimiento de FakeStoreAPI.
+
+4. RESULTADOS OBTENIDOS
+
+---
+
+La ejecución documentada produjo:
+
+* 799 muestras.
+* Tiempo promedio de respuesta: 662 ms.
+* Tiempo mínimo: 184 ms.
+* Tiempo máximo: 21.415 segundos.
+* Desviación estándar: 2.767,36 ms.
+* Error rate: 34,168%.
+* Throughput: 0,19302 TPS.
+
+5. EVALUACIÓN DEL THROUGHPUT
+
+---
+
+El objetivo establecido por el ejercicio es alcanzar como mínimo 20 TPS.
+
+El resultado obtenido fue:
+
+0,19302 TPS
+
+Por lo tanto:
+
+NO CUMPLE.
+
+Aunque el Constant Throughput Timer fue configurado con un objetivo de
+1200 solicitudes por minuto, equivalente a 20 TPS, este componente establece
+un objetivo de generación de carga pero no garantiza que el servidor pueda
+procesar efectivamente dicha cantidad de solicitudes.
+
+6. EVALUACIÓN DEL TIEMPO DE RESPUESTA
+
+---
+
+El ejercicio establece un tiempo máximo de respuesta de 1.500 ms.
+
+El resultado máximo obtenido fue:
+
+21.415 segundos
+(21.415 ms)
+
+Por lo tanto:
+
+NO CUMPLE.
+
+Aunque el promedio de respuesta fue de 662 ms, el criterio solicitado
+corresponde al tiempo máximo y no únicamente al promedio.
+
+7. EVALUACIÓN DEL PORCENTAJE DE ERRORES
+
+---
+
+El ejercicio establece un porcentaje de errores inferior al 3%.
+
+El resultado obtenido fue:
+
+34,168%
+
+Por lo tanto:
+
+NO CUMPLE.
+
+8. ANÁLISIS GENERAL
+
+---
+
+Los resultados obtenidos muestran que el escenario ejecutado no alcanzó
+los niveles de rendimiento establecidos.
+
+Resultados principales:
+
+* Throughput: 0,19302 TPS frente al objetivo de 20 TPS.
+* Tiempo máximo: 21.415 ms frente al límite de 1.500 ms.
+* Errores: 34,168% frente al límite de 3%.
+
+Se observa además una desviación estándar elevada, lo que indica una alta
+variabilidad en los tiempos de respuesta.
+
+Debido a que el endpoint utilizado para la ejecución final es un servicio
+público alternativo, factores externos como disponibilidad, limitaciones
+del servicio o comportamiento ante carga pueden afectar estos resultados.
+
+9. CONCLUSIÓN FINAL
+
+---
+
+La implementación técnica de la prueba de carga fue realizada en Apache
+JMeter, incluyendo:
+
+* Parametrización mediante CSV.
+* Configuración del HTTP Request.
+* Ejecución con usuarios concurrentes.
+* Control de throughput.
+* Recopilación de métricas.
+* Evaluación frente a criterios de aceptación.
+
+Sin embargo, la ejecución disponible NO cumple los criterios cuantitativos
+establecidos:
+
+* Throughput >= 20 TPS: NO CUMPLE.
+* Tiempo máximo <= 1.500 ms: NO CUMPLE.
+* Error rate < 3%: NO CUMPLE.
+
+La principal limitación para realizar una evaluación definitiva del servicio
+original fue la indisponibilidad de FakeStoreAPI.
+
+El endpoint original respondió HTTP 522 desde JMeter y también respondió
+HTTP 522 cuando fue probado directamente mediante curl.exe.
+
+Por esta razón, se utilizó DummyJSON como alternativa para poder completar
+la validación técnica del escenario.
+
+Los resultados de DummyJSON deben considerarse resultados de la ejecución
+alternativa y no una certificación del rendimiento de FakeStoreAPI.
+
+10. RECOMENDACIÓN
+
+---
+
+Cuando el endpoint original FakeStoreAPI vuelva a estar disponible, se
+recomienda repetir la misma prueba utilizando la configuración desarrollada.
+
+Los indicadores que deberán compararse son:
+
+* Throughput real frente al objetivo de 20 TPS.
+* Tiempo máximo frente al límite de 1.500 ms.
+* Porcentaje de errores frente al límite del 3%.
+
+Esto permitirá emitir una conclusión definitiva sobre el cumplimiento del
+ejercicio para el servicio originalmente solicitado.
